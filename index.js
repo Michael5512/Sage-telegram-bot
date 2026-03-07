@@ -88,7 +88,6 @@ async function connectDB() {
 
 // ─── DB Helpers ───────────────────────────────────────────
 async function getUser(userId) {
-  if (!db) throw new Error("DB not ready");
   let user = await db.collection("users").findOne({ userId });
   if (!user) {
     user = {
@@ -633,10 +632,6 @@ const subjectMap = {
 };
 
 // ─── Commands ─────────────────────────────────────────────
-connectDB().then(() => {
-  console.log("✅ Sage Bot is fully running with MongoDB!");
-  app.listen(3000, () => console.log("✅ Server running on port 3000"));
-
 bot.onText(/\/start/, async (msg) => {
   const user = await getUser(msg.from.id);
   await updateUser(msg.from.id, { firstName: msg.from.first_name });
@@ -922,12 +917,6 @@ bot.on("message", async (msg) => {
     bot.sendMessage(chatId, "⚠️ Something went wrong. Please try again.", MAIN_KEYBOARD);
   }
 });
-
-// ─── Start ────────────────────────────────────────────────
-connectDB().then(() => {
-  console.log("✅ Sage Bot is fully running with MongoDB!");
-  
-}).catch(err => { console.error(err); process.exit(1); });
 
 // ─── Auto Cleanup ─────────────────────────────────────────
 async function runCleanup() {
@@ -1305,9 +1294,11 @@ bot.onText(/\/cleanup/, async (msg) => {
   await runCleanup();
 });
 
+// ─── Start ────────────────────────────────────────────────
 connectDB().then(() => {
   console.log("✅ Sage Bot is fully running with MongoDB!");
   app.listen(3000, () => console.log("✅ Server running on port 3000"));
-}).catch(err => { console.error(err); process.exit(1); });
-
-}).catch(err => { console.error(err); process.exit(1); });connectDB().then(() => { console.log("✅ MongoDB ready!"); app.listen(3000, () => console.log("✅ Server running!")); }).catch(err => { console.error(err); process.exit(1); });
+}).catch(err => {
+  console.error("❌ Failed to start:", err);
+  process.exit(1);
+});
