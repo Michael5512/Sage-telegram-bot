@@ -376,7 +376,7 @@ async function createPaystackLink(userId, plan, email) {
 }
 
 // ─── Bot & Express ────────────────────────────────────────
-const bot = new TelegramBot(TELEGRAM_TOKEN, { polling: true });
+const bot = new TelegramBot(TELEGRAM_TOKEN, { polling: false });
 const app = express();
 app.use(express.json());
 
@@ -1296,6 +1296,7 @@ bot.onText(/\/cleanup/, async (msg) => {
 
 // ─── Start ────────────────────────────────────────────────
 connectDB().then(() => {
+  bot.startPolling();
   console.log("✅ Sage Bot is fully running with MongoDB!");
   app.listen(3000, () => console.log("✅ Server running on port 3000"));
 }).catch(err => {
