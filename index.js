@@ -921,7 +921,7 @@ bot.on("message", async (msg) => {
 // ─── Start ────────────────────────────────────────────────
 connectDB().then(() => {
   console.log("✅ Sage Bot is fully running with MongoDB!");
-  app.listen(3000, () => console.log("✅ Server running on port 3000"));
+  
 }).catch(err => { console.error(err); process.exit(1); });
 
 // ─── Auto Cleanup ─────────────────────────────────────────
@@ -1299,3 +1299,8 @@ bot.onText(/\/cleanup/, async (msg) => {
   bot.sendMessage(msg.chat.id, "🧹 Running cleanup...");
   await runCleanup();
 });
+
+connectDB().then(() => {
+  console.log("✅ Sage Bot is fully running with MongoDB!");
+  app.listen(3000, () => console.log("✅ Server running on port 3000"));
+}).catch(err => { console.error(err); process.exit(1); });
