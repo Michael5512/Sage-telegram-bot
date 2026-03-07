@@ -633,6 +633,10 @@ const subjectMap = {
 };
 
 // ─── Commands ─────────────────────────────────────────────
+connectDB().then(() => {
+  console.log("✅ Sage Bot is fully running with MongoDB!");
+  app.listen(3000, () => console.log("✅ Server running on port 3000"));
+
 bot.onText(/\/start/, async (msg) => {
   const user = await getUser(msg.from.id);
   await updateUser(msg.from.id, { firstName: msg.from.first_name });
@@ -1305,3 +1309,5 @@ connectDB().then(() => {
   console.log("✅ Sage Bot is fully running with MongoDB!");
   app.listen(3000, () => console.log("✅ Server running on port 3000"));
 }).catch(err => { console.error(err); process.exit(1); });
+
+}).catch(err => { console.error(err); process.exit(1); });connectDB().then(() => { console.log("✅ MongoDB ready!"); app.listen(3000, () => console.log("✅ Server running!")); }).catch(err => { console.error(err); process.exit(1); });
