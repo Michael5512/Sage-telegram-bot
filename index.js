@@ -88,6 +88,7 @@ async function connectDB() {
 
 // ─── DB Helpers ───────────────────────────────────────────
 async function getUser(userId) {
+  if (!db) throw new Error("DB not ready");
   let user = await db.collection("users").findOne({ userId });
   if (!user) {
     user = {
