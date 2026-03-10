@@ -2113,15 +2113,6 @@ bot.on("message", async (msg) => {
   }
 });
 
-// ─── Start ────────────────────────────────────────────────
-connectDB().then(() => {
-  console.log("✅ Sage Bot is fully running with MongoDB!");
-  app.listen(3000, () => console.log("✅ Server running on port 3000"));
-}).catch(err => {
-  console.error("❌ Failed to start:", err);
-  process.exit(1);
-});
-
 // ─── Auto Cleanup ─────────────────────────────────────────
 async function runCleanup() {
   try {
