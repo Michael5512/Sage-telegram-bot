@@ -1870,9 +1870,9 @@ bot.on("pre_checkout_query", async (query) => {
 bot.on("message", async (msg) => {
   if (!msg.successful_payment) return;
   const payload = msg.successful_payment.invoice_payload;
-  const parts = payload.split("_");
-  const plan = parts[1]; // weekly or monthly
-  const userId = msg.from.id;
+const parts = payload.split("_");
+const plan = parts[2]; // weekly or monthly (was parts[1] — wrong!)
+const userId = msg.from.id;
   if (!PLANS[plan]) return;
   await activatePremium(userId, PLANS[plan].days, plan);
   await trackRevenue(PLANS[plan].price, plan, userId);
